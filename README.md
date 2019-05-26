@@ -24,9 +24,7 @@ After building the artifacts follow these steps:
 
 1. Add this to your `<ARTEMIS_INSTANCE>/etc/broker.xml`:
 
-       ```xml
        <metrics-plugin class-name="org.apache.activemq.artemis.core.server.metrics.plugins.ArtemisPrometheusMetricsPlugin"/>
-       ```
 
 1. Create the directory `<ARTEMIS_INSTANCE>/web`
 
@@ -34,6 +32,4 @@ After building the artifacts follow these steps:
 
 1. Add this to the `web` element in `<ARTEMIS_INSTANCE>/etc/bootstrap.xml`:
 
-       ```xml
        <app url="metrics" war="metrics.war"/>
-       ```
