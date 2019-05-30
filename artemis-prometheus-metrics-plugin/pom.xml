@@ -24,7 +24,7 @@ under the License.
    <parent>
       <groupId>org.apache.activemq</groupId>
       <artifactId>artemis-prometheus-metrics-pom</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>1.0.0.CR1</version>
    </parent>
 
    <artifactId>artemis-prometheus-metrics-plugin</artifactId>
