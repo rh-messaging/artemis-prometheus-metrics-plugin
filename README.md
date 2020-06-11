@@ -7,9 +7,9 @@ It provides integration with Prometheus using two modules:
   `org.apache.activemq.artemis.core.server.metrics.ActiveMQMetricsPlugin` and
   packages it with the micrometer and Prometheus dependencies in an "uber" jar.
 
-- **artemis-prometheus-metrics-plugin** Provides a war file containing a simple
-  servlet which can be deployed to the broker's embedded web server which then
-  Prometheus can use to scrape metrics.
+- **artemis-prometheus-metrics-plugin-servlet** Provides a war file containing
+  a simple servlet which can be deployed to the broker's embedded web server
+  which then Prometheus can use to scrape metrics.
 
 ## Building
 
