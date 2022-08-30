@@ -36,7 +36,7 @@ under the License.
       <dependency>
          <groupId>org.apache.activemq</groupId>
          <artifactId>artemis-server</artifactId>
-         <version>2.9.0</version>
+         <version>2.24.0</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
