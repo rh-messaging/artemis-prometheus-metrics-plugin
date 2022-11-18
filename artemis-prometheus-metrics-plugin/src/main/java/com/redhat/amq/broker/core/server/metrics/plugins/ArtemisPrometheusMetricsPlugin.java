@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.activemq.artemis.core.server.metrics.plugins;
+package com.redhat.amq.broker.core.server.metrics.plugins;
 
 import java.util.Map;
 
