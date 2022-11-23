@@ -25,7 +25,7 @@ After building the artifacts follow these steps:
 
 1. Add this to your `<ARTEMIS_INSTANCE>/etc/broker.xml`:
 
-       <metrics><plugin class-name="org.apache.activemq.artemis.core.server.metrics.plugins.ArtemisPrometheusMetricsPlugin"/></metrics>
+       <metrics><plugin class-name="com.redhat.amq.broker.core.server.metrics.plugins.ArtemisPrometheusMetricsPlugin"/></metrics>
 
 1. Create the directory `<ARTEMIS_INSTANCE>/web`.
 

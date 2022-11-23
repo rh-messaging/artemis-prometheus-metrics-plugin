@@ -7,7 +7,7 @@
 <web-app>
    <servlet>
       <servlet-name>artemis-prometheus-metrics-plugin-servlet</servlet-name>
-      <servlet-class>org.apache.activemq.artemis.core.server.metrics.plugins.ArtemisPrometheusMetricsPluginServlet</servlet-class>
+      <servlet-class>com.redhat.amq.broker.core.server.metrics.plugins.ArtemisPrometheusMetricsPluginServlet</servlet-class>
    </servlet>
 
    <servlet-mapping>
