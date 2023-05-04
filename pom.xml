@@ -18,16 +18,70 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   <modelVersion>4.0.0</modelVersion>
-   <groupId>com.redhat.amq-broker</groupId>
-   <artifactId>artemis-prometheus-metrics-pom</artifactId>
-   <packaging>pom</packaging>
-   <version>2.0.0</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.redhat.amq-broker</groupId>
+    <artifactId>artemis-prometheus-metrics-pom</artifactId>
+    <packaging>pom</packaging>
+    <version>2.0.1</version>
 
-   <modules>
-      <module>artemis-prometheus-metrics-plugin-servlet</module>
-      <module>artemis-prometheus-metrics-plugin</module>
-   </modules>
+    <properties>
+        <artemis-server.version>2.28.0</artemis-server.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
+        <micrometer-core.version>1.10.6</micrometer-core.version>
+        <micrometer-registry-prometheus.version>1.10.6</micrometer-registry-prometheus.version>
+        <tomcat-servlet-api.version>9.0.74</tomcat-servlet-api.version>
+    </properties>
+
+    <modules>
+        <module>artemis-prometheus-metrics-plugin-servlet</module>
+        <module>artemis-prometheus-metrics-plugin</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-server</artifactId>
+                <version>${artemis-server.version}</version>
+                <scope>provided</scope> <!-- this is provided by the broker -->
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${micrometer-registry-prometheus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-core</artifactId>
+                <version>${micrometer-core.version}</version>
+                <scope>provided</scope> <!-- this is provided by the broker -->
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-servlet-api</artifactId>
+                <version>${tomcat-servlet-api.version}</version>
+                <scope>provided</scope> <!-- this is provided by the broker -->
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
 

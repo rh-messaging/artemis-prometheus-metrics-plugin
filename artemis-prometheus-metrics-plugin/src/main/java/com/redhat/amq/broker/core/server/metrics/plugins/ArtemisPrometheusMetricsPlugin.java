@@ -26,11 +26,11 @@ import org.apache.activemq.artemis.core.server.metrics.ActiveMQMetricsPlugin;
 
 public class ArtemisPrometheusMetricsPlugin implements ActiveMQMetricsPlugin {
 
-   MeterRegistry meterRegistry;
+   private MeterRegistry meterRegistry;
 
    @Override
-   public ActiveMQMetricsPlugin init(Map<String, String> options) {
-      this.meterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+   public ActiveMQMetricsPlugin init(final Map<String, String> options) {
+      meterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
       return this;
    }
 

@@ -30,25 +30,31 @@ import io.micrometer.core.instrument.Metrics;
 
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 
+
 public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
 
    private PrometheusMeterRegistry registry;
 
    public ArtemisPrometheusMetricsPluginServlet() {
-      Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
-      if (registries != null && registries.size() > 0) {
-         registry = (PrometheusMeterRegistry) registries.toArray()[0];
+      final Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
+      if (registries != null && !registries.isEmpty()) {
+         for (final MeterRegistry meterRegistry : registries) {
+            if (meterRegistry instanceof PrometheusMeterRegistry) {
+               registry = (PrometheusMeterRegistry) meterRegistry;
+               break;
+            }
+         }
       }
    }
 
    @Override
-   protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+   protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
       resp.setStatus(HttpServletResponse.SC_OK);
 
       if (registry == null) {
          resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Prometheus meter registry is null. Has the Prometheus Metrics Plugin been configured?");
       } else {
-         try (Writer writer = resp.getWriter()) {
+         try (final Writer writer = resp.getWriter()) {
             writer.write(registry.scrape());
             writer.flush();
          }
