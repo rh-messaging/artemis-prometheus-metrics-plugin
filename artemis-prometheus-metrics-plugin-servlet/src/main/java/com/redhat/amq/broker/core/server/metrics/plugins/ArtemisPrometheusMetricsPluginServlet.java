@@ -35,9 +35,14 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
    private PrometheusMeterRegistry registry;
 
    public ArtemisPrometheusMetricsPluginServlet() {
-      Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
-      if (registries != null && registries.size() > 0) {
-         registry = (PrometheusMeterRegistry) registries.toArray()[0];
+      final Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
+      if (registries != null && !registries.isEmpty()) {
+         for (final MeterRegistry meterRegistry : registries) {
+            if (meterRegistry instanceof PrometheusMeterRegistry) {
+               registry = (PrometheusMeterRegistry) meterRegistry;
+               break;
+            }
+         }
       }
    }
 
