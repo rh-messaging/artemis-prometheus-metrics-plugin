@@ -17,12 +17,14 @@
 
 package com.redhat.amq.broker.core.server.metrics.plugins;
 
+import javax.security.auth.Subject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
+import java.security.PrivilegedAction;
 import java.util.Set;
 
 import io.micrometer.core.instrument.MeterRegistry;
@@ -54,7 +56,7 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
          resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Prometheus meter registry is null. Has the Prometheus Metrics Plugin been configured?");
       } else {
          try (Writer writer = resp.getWriter()) {
-            writer.write(registry.scrape());
+            writer.write(Subject.doAs(new Subject(), (PrivilegedAction<String>)(() -> registry.scrape())));
             writer.flush();
          }
       }
