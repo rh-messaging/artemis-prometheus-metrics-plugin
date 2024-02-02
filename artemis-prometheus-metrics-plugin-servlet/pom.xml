@@ -24,7 +24,7 @@ under the License.
    <parent>
       <groupId>com.redhat.amq-broker</groupId>
       <artifactId>artemis-prometheus-metrics-pom</artifactId>
-      <version>2.1.0</version>
+      <version>3.0.0</version>
    </parent>
 
    <artifactId>artemis-prometheus-metrics-plugin-servlet</artifactId>
@@ -33,8 +33,8 @@ under the License.
 
    <dependencies>
       <dependency>
-         <groupId>org.apache.tomcat</groupId>
-         <artifactId>tomcat-servlet-api</artifactId>
+         <groupId>jakarta.servlet</groupId>
+         <artifactId>jakarta.servlet-api</artifactId>
       </dependency>
       <dependency>
          <groupId>io.micrometer</groupId>
@@ -49,6 +49,12 @@ under the License.
 
    <build>
       <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.1</version>
+         </plugin>
+
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
