@@ -35,22 +35,29 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
    private PrometheusMeterRegistry registry;
 
    public ArtemisPrometheusMetricsPluginServlet() {
-      final Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
-      if (registries != null && !registries.isEmpty()) {
-         for (final MeterRegistry meterRegistry : registries) {
-            if (meterRegistry instanceof PrometheusMeterRegistry) {
-               registry = (PrometheusMeterRegistry) meterRegistry;
-               break;
+      locateRegistry();
+   }
+
+   private PrometheusMeterRegistry locateRegistry() {
+      if (registry == null) {
+         final Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
+         if (registries != null && !registries.isEmpty()) {
+            for (final MeterRegistry meterRegistry : registries) {
+               if (meterRegistry instanceof PrometheusMeterRegistry) {
+                  registry = (PrometheusMeterRegistry) meterRegistry;
+                  break;
+               }
             }
          }
       }
+      return registry;
    }
 
    @Override
    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
       resp.setStatus(HttpServletResponse.SC_OK);
 
-      if (registry == null) {
+      if (locateRegistry() == null) {
          resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Prometheus meter registry is null. Has the Prometheus Metrics Plugin been configured?");
       } else {
          try (Writer writer = resp.getWriter()) {
