@@ -17,39 +17,34 @@
 
 package com.redhat.amq.broker.core.server.metrics.plugins;
 
-import java.util.Map;
-
-import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.apache.activemq.artemis.core.server.ActiveMQServer;
-import org.apache.activemq.artemis.core.server.metrics.ActiveMQMetricsPlugin;
 
-public class ArtemisPrometheusMetricsPlugin implements ActiveMQMetricsPlugin {
+public class ArtemisPrometheusMeterRegistry extends PrometheusMeterRegistry {
 
-   MeterRegistry meterRegistry;
+   private volatile ActiveMQServer server;
 
-   @Override
-   public ActiveMQMetricsPlugin init(Map<String, String> options) {
-      try {
-         ActiveMQMetricsPlugin.class.getMethod("registered", ActiveMQServer.class);
-         this.meterRegistry = new ArtemisPrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-      } catch (NoSuchMethodException ignore) {
-         this.meterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-      }
+   public ActiveMQServer getServer() {
+      return server;
+   }
 
-      return this;
+   public void setServer(ActiveMQServer server) {
+      this.server = server;
+   }
+
+   public ArtemisPrometheusMeterRegistry(PrometheusConfig config) {
+      super(config);
    }
 
    @Override
-   public MeterRegistry getRegistry() {
-      return meterRegistry;
-   }
+   public String scrape() {
+      ActiveMQServer currentServer = getServer();
 
-   @Override
-   public void registered(ActiveMQServer server) {
-      if (meterRegistry instanceof ArtemisPrometheusMeterRegistry) {
-         ((ArtemisPrometheusMeterRegistry)meterRegistry).setServer(server);
+      if (currentServer == null || !currentServer.isStarted()) {
+         throw new IllegalStateException("Server is not ready.");
       }
+
+      return super.scrape();
    }
 }
