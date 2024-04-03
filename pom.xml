@@ -27,12 +27,11 @@ under the License.
    <version>3.0.0</version>
 
    <properties>
-      <artemis-server.version>2.28.0</artemis-server.version>
+      <artemis-server.version>2.32.0</artemis-server.version>
       <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
       <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
       <micrometer-core.version>1.10.6</micrometer-core.version>
       <micrometer-registry-prometheus.version>1.10.6</micrometer-registry-prometheus.version>
-      <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
    </properties>
 
    <modules>
@@ -60,10 +59,10 @@ under the License.
             <scope>provided</scope> <!-- this is provided by the broker -->
          </dependency>
          <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>${jakarta.servlet-api.version}</version>
-            <scope>provided</scope> <!-- this is provided by the broker -->
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
          </dependency>
       </dependencies>
    </dependencyManagement>
