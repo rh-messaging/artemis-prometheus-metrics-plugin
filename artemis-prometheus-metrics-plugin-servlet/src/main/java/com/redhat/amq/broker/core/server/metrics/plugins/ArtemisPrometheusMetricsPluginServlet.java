@@ -61,6 +61,7 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
       } else {
          try {
             String output = registry.scrape();
+            resp.setContentType("text/plain");
             resp.setStatus(HttpServletResponse.SC_OK);
             try (Writer writer = resp.getWriter()) {
                writer.write(output);
