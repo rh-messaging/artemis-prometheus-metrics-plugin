@@ -23,7 +23,7 @@ import java.util.Set;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
-
+import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -41,16 +41,23 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
    private PrometheusMeterRegistry locateRegistry() {
       if (registry == null) {
          final Set<MeterRegistry> registries = Metrics.globalRegistry.getRegistries();
-         if (registries != null && !registries.isEmpty()) {
-            for (final MeterRegistry meterRegistry : registries) {
-               if (meterRegistry instanceof PrometheusMeterRegistry) {
-                  registry = (PrometheusMeterRegistry) meterRegistry;
-                  break;
-               }
+         registry = locateRegistry(registries);
+      }
+      return registry;
+   }
+
+   private PrometheusMeterRegistry locateRegistry(Set<MeterRegistry> registries) {
+      if (registries != null && !registries.isEmpty()) {
+         for (final MeterRegistry meterRegistry : registries) {
+            if (meterRegistry instanceof PrometheusMeterRegistry) {
+               return (PrometheusMeterRegistry) meterRegistry;
+            } else if (meterRegistry instanceof CompositeMeterRegistry) {
+               CompositeMeterRegistry compositeMeterRegistry = (CompositeMeterRegistry) meterRegistry;
+               return locateRegistry(compositeMeterRegistry.getRegistries());
             }
          }
       }
-      return registry;
+      return null;
    }
 
    @Override
