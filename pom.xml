@@ -24,7 +24,7 @@ under the License.
    <groupId>com.redhat.amq-broker</groupId>
    <artifactId>artemis-prometheus-metrics-pom</artifactId>
    <packaging>pom</packaging>
-   <version>3.1.0</version>
+   <version>3.2.0</version>
 
    <properties>
       <artemis-server.version>2.32.0</artemis-server.version>
