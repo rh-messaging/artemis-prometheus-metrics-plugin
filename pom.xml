@@ -27,7 +27,7 @@ under the License.
    <version>3.2.0</version>
 
    <properties>
-      <artemis-server.version>2.32.0</artemis-server.version>
+      <artemis-server.version>2.40.0</artemis-server.version>
       <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
       <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
       <micrometer-core.version>1.10.6</micrometer-core.version>
