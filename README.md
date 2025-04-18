@@ -14,7 +14,7 @@ It provides integration with Prometheus using two modules:
 ## Building
 
 Simply run `mvn install`. This command will build both modules and the output
-will be in their respective `target` directories.
+will be in their respective `target` directories. JDK 11 or higher is required.
 
 ## Installing in ActiveMQ Artemis
 
