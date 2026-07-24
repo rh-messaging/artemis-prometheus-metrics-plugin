@@ -38,10 +38,6 @@ under the License.
       </dependency>
       <dependency>
          <groupId>io.micrometer</groupId>
-         <artifactId>micrometer-core</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>io.micrometer</groupId>
          <artifactId>micrometer-registry-prometheus</artifactId>
          <scope>provided</scope> <!-- this will be provided by the artemis-prometheus-metrics-plugin uber jar -->
       </dependency>

@@ -18,13 +18,12 @@
 package com.redhat.amq.broker.core.server.metrics.plugins;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Set;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,7 +45,7 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
       return registry;
    }
 
-   private PrometheusMeterRegistry locateRegistry(Set<MeterRegistry> registries) {
+   private static PrometheusMeterRegistry locateRegistry(Set<MeterRegistry> registries) {
       if (registries != null && !registries.isEmpty()) {
          for (final MeterRegistry meterRegistry : registries) {
             if (meterRegistry instanceof PrometheusMeterRegistry) {
@@ -67,13 +66,7 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
          resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Prometheus meter registry is null. Has the Prometheus Metrics Plugin been configured?");
       } else {
          try {
-            String output = registry.scrape();
-            resp.setContentType("text/plain");
-            resp.setStatus(HttpServletResponse.SC_OK);
-            try (Writer writer = resp.getWriter()) {
-               writer.write(output);
-               writer.flush();
-            }
+            registry.scrape(resp.getOutputStream());
          } catch (Throwable t) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, t.getMessage());
          }

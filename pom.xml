@@ -27,11 +27,10 @@ under the License.
    <version>3.2.0</version>
 
    <properties>
-      <artemis-server.version>2.32.0</artemis-server.version>
+      <artemis-server.version>2.55.0</artemis-server.version>
       <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
       <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
-      <micrometer-core.version>1.10.6</micrometer-core.version>
-      <micrometer-registry-prometheus.version>1.10.6</micrometer-registry-prometheus.version>
+      <micrometer-registry-prometheus.version>1.17.0</micrometer-registry-prometheus.version>
       <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
    </properties>
 
@@ -43,7 +42,7 @@ under the License.
    <dependencyManagement>
       <dependencies>
          <dependency>
-            <groupId>org.apache.activemq</groupId>
+            <groupId>org.apache.artemis</groupId>
             <artifactId>artemis-server</artifactId>
             <version>${artemis-server.version}</version>
             <scope>provided</scope> <!-- this is provided by the broker -->
@@ -52,12 +51,6 @@ under the License.
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <version>${micrometer-registry-prometheus.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-core</artifactId>
-            <version>${micrometer-core.version}</version>
-            <scope>provided</scope> <!-- this is provided by the broker -->
          </dependency>
          <dependency>
             <groupId>jakarta.servlet</groupId>
