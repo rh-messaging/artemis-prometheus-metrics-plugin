@@ -67,12 +67,10 @@ public class ArtemisPrometheusMetricsPluginServlet extends HttpServlet {
          resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Prometheus meter registry is null. Has the Prometheus Metrics Plugin been configured?");
       } else {
          try {
-            String output = registry.scrape();
             resp.setContentType("text/plain");
             resp.setStatus(HttpServletResponse.SC_OK);
             try (Writer writer = resp.getWriter()) {
-               writer.write(output);
-               writer.flush();
+                registry.scrape(writer);
             }
          } catch (Throwable t) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, t.getMessage());
