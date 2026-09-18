@@ -1,6 +1,6 @@
 # Artemis Prometheus Metrics Plugin
 
-This is a metrics plugin implementation for the ActiveMQ Artemis message broker.
+This is a metrics plugin implementation for the Apache Artemis message broker.
 It provides integration with Prometheus using two modules:
 
 - **artemis-prometheus-metrics-plugin** Provides the actual implementation of
@@ -11,12 +11,17 @@ It provides integration with Prometheus using two modules:
   a simple servlet which can be deployed to the broker's embedded web server
   which then Prometheus can use to scrape metrics.
 
+## Version Compatibility
+
+- Version 3.x — for Apache Artemis 2.39.0 and above
+- Version 2.x — for Apache Artemis up to 2.38.x
+
 ## Building
 
 Simply run `mvn install`. This command will build both modules and the output
 will be in their respective `target` directories. JDK 11 or higher is required.
 
-## Installing in ActiveMQ Artemis
+## Installing in Apache Artemis
 
 After building the artifacts follow these steps:
 
